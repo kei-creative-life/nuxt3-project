@@ -30,6 +30,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ec2-user@54.249.167.143
             git pull origin main
             npm ci
             npm install pm2 -g
