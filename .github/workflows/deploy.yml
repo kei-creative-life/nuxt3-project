@@ -22,7 +22,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME}
 
             cd ~
-            git@github.com:kei-creative-life/nuxt3-project.git &&
+            git clone git@github.com:kei-creative-life/nuxt3-project.git &&
             cd nuxt3-project
             npm ci &&
             npm install pm2 -g &&
