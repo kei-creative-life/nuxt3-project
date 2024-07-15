@@ -28,12 +28,38 @@ jobs:
         with:
           host: "54.249.167.143"
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: "-----BEGIN RSA PRIVATE KEY-----
+            MIIEogIBAAKCAQEAqCqpLVXiPn3ICFUf+Jr8U9dN6FA1IvzVrcxHbiuMr5n3R6of
+            ezfI0zk/jkS04cp74xEo/bODyW4Qg2NqnFDlAKNQ9O9gB+mviHG7xYlN8bot/EHb
+            ScF4QLfAzNzu4SV49vgJ1LbTSVRhVaqRzkUKniQIGEvxDWWyUOcV/z0sFDYaS9Sy
+            ovbpFy9RexK8Jq/Xh8TAlMQIS/AbOXSQwYFETHIpD7f3BGl2lQMYZtS35gtf/f0l
+            lDLWnvKu9S4SxixUYvY0pbAzQ5gilmEKK0h8+E+Mnt+uFHR13RI2GMIRThqFhJD9
+            N1Z9qxQjDtqV8F1Y4sl7PhomEI1SDfPy0BmpGQIDAQABAoIBAFz+Ylloodju03wQ
+            HsLqadivOizaldfIOx2F1oZM3NqKaN0fbZNE8PAlO0kgI2qs/z880Q8igyETlVwi
+            0OSqM0jcBzu7V75ocqIgSrbcy9Z9n0pc3Lf3ndkkBCEFl6+3eiIQXddcVpC5ca3e
+            ygxnz4xN3pAZBq7i6u2kLFzd5g8yRqkIU8t5IE7errt2AK3qhwLCqQQQCaSa6Wh/
+            Xa0Rkwi8Lx8A80kfM+YxjPFaPEjqGHa0eStwVmxs3s0dP64GtbY7/AeFkq8AcTxG
+            d1wJVwcIUKbHBY9vGgayUhQYkrvWzkjOyeNTSYolzA9YKhaYlxkpCIKU61YZUU4o
+            pTZluRECgYEA+MxzzENo8LGVjIHz0GOOG2w+igsRFuxz3xaB4X5isw/mZ42KfD2Y
+            XEH+aBUeAdMLeBEQh9rGuGESDpXzYmRR9faK3Ou/ufSeJppelGS7Rdq021Xsp2iG
+            TrWnRavzHwHoMqKyVUAIopaV4kfkKo3Lr/jqjp/OnxpjOrpTgnytwqUCgYEArQi9
+            4AnV7IeZUfV96gvaNQC4KbRy6VDRHurrWeSPsZf8TgceSIRbXrTT8LpSE1RqPfio
+            YWZekEnu7dkde0ZEGhwT2SrUQJ/UAB5l/e1elFkxN76B/Qa5Vy6tSL+Faczsgtkw
+            E21afnEnbhyfvHq6wmFh97RGTPBwJ4GrR3RMBmUCgYAhHX1wO6y1FL32BLoCC643
+            gjHUx+JPbcuCbwl8jQjwEna1Y8aCAOTNqs8E5YKn9YI6SfMsUfdPRURVAqpxdy7d
+            kSIsg4hyZNfEBZn/IGU4yAJ4izhDlAsEYPNRt7BVeTiBvNwFss8zbN2oT69T5qms
+            03HM6AJldOquP2ysGpI6LQKBgCL7Dm+5bU75Bszj5UWoib+HWrPLsCNs3Cn08gll
+            RItxn2ci10Nvxoz535LeB/OycBwBJgEy0dE3sR7ScrxWMzRYEscnemtqJFC11Iam
+            MyWodmO/lsXRUyzF2fBID6+Y5wN45tg2lkHTnFYNYVmYMiNTzptmDYRGY1YJR9gV
+            Mb1lAoGANsvtb6YnFt2lghoy2/FrjMIRN60WyV3HvUfN1a2+0Zzb97o64oGy7XvI
+            subjqMJP3WkMZtPrt6WE3ZxzPAqgOm13fHXBNoR+wW0OKQMc/rjIlE3aEeCKNJ+E
+            BsZRJ3e23HD73iLjLu9o86MFQM7dOSPW3dCH9gz5C/Zj7Ot2A9c=
+            -----END RSA PRIVATE KEY-----"
           script: |
             echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
             ssh -o StrictHostKeyChecking=no -i private_key ec2-user@54.249.167.143
-            git pull origin main
-            npm ci
-            npm install pm2 -g
+            git pull origin main &&
+            npm ci &&
+            npm install pm2 -g &&
             npm run build
           debug: true
