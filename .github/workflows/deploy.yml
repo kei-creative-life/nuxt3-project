@@ -8,17 +8,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Deploy to EC2
-        env:
-          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          HOSTNAME: "54.249.167.143"
-          USER_NAME: ${{secrets.EC2_USERNAME}}
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
-          git pull origin main &&
-          npm ci &&
-          npm install pm2 -g &&
-          npm run build
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: "54.249.167.143"
+          username: ${{secrets.EC2_USERNAME}}
+          script: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME}
+
+            git pull origin main &&
+            npm ci &&
+            npm install pm2 -g &&
+            npm run build
           debug: true
